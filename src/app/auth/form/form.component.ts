@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-form',
@@ -7,32 +8,33 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./form.component.scss']
 })
 export class FormComponent implements OnInit {
-  nameForm!: FormGroup;
+  username!: FormGroup;
   submitted: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
     this.initializeForm();
   }
 
   initializeForm(): void {
-    this.nameForm = this.formBuilder.group({
-      nameForm: ['', Validators.required]
+    this.username = this.formBuilder.group({
+      userForm: ['', Validators.required]
     });
   }
 
   onSubmit(): void {
-    if (this.nameForm.valid) {
-      const nameForm = this.nameForm.get('nameForm')?.value;
+    if (this.username.valid) {
+      const userForm = this.username.get('userForm')?.value;
 
-      sessionStorage.setItem('nameForm', nameForm);
+      sessionStorage.setItem('username', userForm);
 
       this.resetForm();
+      this.router.navigate(['/lobby']);
     }
   }
 
   resetForm(): void {
-    this.nameForm.reset();
+    this.username.reset();
   }
 }

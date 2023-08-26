@@ -1,22 +1,28 @@
-<form class="container" [formGroup]="nameForm" (ngSubmit)="onSubmit()">
+<div class="container">
+  <h1 class="text-center text-secondary">Rate Track</h1>
+  <p class="text-center lead">
+    enter your username and enjoy tracking exchange rates
+</div>
+
+<form class="container" [formGroup]="username" (ngSubmit)="onSubmit()">
   <div class="row mb-3 d-flex justify-content-center mt-5">
     <div class="col-md-10 col-lg-8 col-xl-6">
-      <label for="name-form" class="form-label fs-5">Username</label>
+      <label for="username-form" class="form-label fs-5">Username</label>
       <input
         class="form-control mb-2"
-        id="name-form"
-        formControlName="nameForm"
+        id="username-form"
+        formControlName="userForm"
         required
         [class.is-invalid]="
-          nameForm.get('nameForm')?.invalid &&
-          (nameForm.get('nameForm')?.touched || submitted)
+          username.get('userForm')?.invalid &&
+          (username.get('userForm')?.touched || submitted)
         "
       />
       <div
         class="invalid-feedback"
         *ngIf="
-          nameForm.get('nameForm')?.invalid &&
-          (nameForm.get('nameForm')?.touched || submitted)
+          username.get('userForm')?.invalid &&
+          (username.get('userForm')?.touched || submitted)
         "
       >
         Username is required
