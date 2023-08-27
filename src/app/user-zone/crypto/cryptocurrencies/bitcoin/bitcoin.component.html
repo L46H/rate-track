@@ -1,0 +1,7 @@
+<div class="text-center container">
+  <div *ngIf="cryptoData$ | async as tickerData">
+    <p>{{ tickerData.ticker.market.first.currency }}/</p>
+    <p>{{ tickerData.ticker.market.second.currency }}</p>
+    <p class="rate px-1">{{ tickerData.ticker.rate | number : '1.2-2' }}</p>
+  </div>
+</div>
