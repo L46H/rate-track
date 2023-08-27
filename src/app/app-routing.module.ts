@@ -14,6 +14,12 @@ const routes: Routes = [
     loadChildren: () =>
       import('./user-zone/lobby/lobby.module').then(m => m.LobbyModule)
   },
+  {
+    path: 'crypto',
+    canActivate: [authGuard],
+    loadChildren: () =>
+      import('./user-zone/crypto/crypto.module').then(m => m.CryptoModule)
+  },
   { path: '**', component: WrongPathComponent }
 ];
 

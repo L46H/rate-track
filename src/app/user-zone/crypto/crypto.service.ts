@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Rate } from './interface/cryptoData.interface';
-import { Observable, switchMap } from 'rxjs';
+import { Ticker } from './interface/cryptoData.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class CryptoService {
 
   constructor(private http: HttpClient) {}
 
-  getMarketData(currencyPair: string): Observable<Rate> {
-    return this.http.get<Rate>(`${this.apiUrl}/${currencyPair}`);
+  getMarketData(currencyPair: string): Observable<Ticker> {
+    return this.http.get<Ticker>(`${this.apiUrl}/${currencyPair}`);
   }
 }

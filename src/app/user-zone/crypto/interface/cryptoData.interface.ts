@@ -1,4 +1,4 @@
-export interface Rate {
+export interface Ticker {
   ticker: {
     market: Market;
     time: string;
