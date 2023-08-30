@@ -1,7 +1,21 @@
-<div class="text-center container">
-  <div *ngIf="cryptoData$ | async as tickerData">
-    <p>{{ tickerData.ticker.market.first.currency }}/</p>
-    <p>{{ tickerData.ticker.market.second.currency }}</p>
-    <p class="rate px-1">{{ tickerData.ticker.rate | number : '1.2-2' }}</p>
-  </div>
+<div *ngIf="cryptoData$ | async as cryptoData">
+  <h2>Crypto Market Data</h2>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Market</th>
+        <th>Time</th>
+        <th>Rate</th>
+        <th>Previous Rate</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>{{ cryptoData.ticker.market.code }}</td>
+        <td>{{ cryptoData.ticker.time }}</td>
+        <td>{{ cryptoData.ticker.rate }}</td>
+        <td>{{ cryptoData.ticker.previousRate }}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>

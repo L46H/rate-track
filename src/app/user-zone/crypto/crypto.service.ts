@@ -1,17 +1,22 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Ticker } from './interface/cryptoData.interface';
-import { Observable } from 'rxjs';
+import { Observable, interval, startWith, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CryptoService {
   private apiUrl = 'https://api.zonda.exchange/rest/trading/ticker';
+  private updateInterval = 15000;
 
   constructor(private http: HttpClient) {}
 
   getMarketData(currencyPair: string): Observable<Ticker> {
-    return this.http.get<Ticker>(`${this.apiUrl}/${currencyPair}`);
+    return interval(this.updateInterval).pipe(
+      startWith(0),
+      switchMap(() => this.http.get<Ticker>(`${this.apiUrl}/${currencyPair}`)),
+    );
   }
 }
+
