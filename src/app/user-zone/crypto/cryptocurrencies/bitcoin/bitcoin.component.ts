@@ -20,4 +20,18 @@ export class BitcoinComponent implements OnInit {
   fetchMarketData(): void {
     this.cryptoData$ = this.cryptoService.getMarketData('BTC-USD');
   }
+
+  calculatePercentageChange(rate: string, previousRate: string): number {
+    const rateValue = parseFloat(rate);
+    const previousRateValue = parseFloat(previousRate);
+
+    return ((rateValue - previousRateValue) / previousRateValue) * 100;
+  }
+
+  calculateAverageRate(rate: string, previousRate: string): number {
+    const rateValue = parseFloat(rate);
+    const previousRateValue = parseFloat(previousRate);
+
+    return (rateValue + previousRateValue) / 2;
+  }
 }

@@ -1,20 +1,41 @@
 <div *ngIf="cryptoData$ | async as cryptoData">
-  <h2>Crypto Market Data</h2>
+  <h2 class="text-center mb-5">Crypto Market Data</h2>
   <table class="table">
     <thead>
       <tr>
-        <th>Market</th>
-        <th>Time</th>
-        <th>Rate</th>
-        <th>Previous Rate</th>
+        <th>Bitcoin</th>
+        <th>Average Rate</th>
+        <th>Trend</th>
       </tr>
     </thead>
     <tbody>
       <tr>
         <td>{{ cryptoData.ticker.market.code }}</td>
-        <td>{{ cryptoData.ticker.time }}</td>
-        <td>{{ cryptoData.ticker.rate }}</td>
-        <td>{{ cryptoData.ticker.previousRate }}</td>
+        <td>
+          {{
+            calculateAverageRate(
+              cryptoData.ticker.rate,
+              cryptoData.ticker.previousRate
+            ).toFixed(2)
+          }}
+        </td>
+        <td [ngClass]="{
+          'text-success': calculatePercentageChange(
+            cryptoData.ticker.rate,
+            cryptoData.ticker.previousRate
+          ) >= 0,
+          'text-danger': calculatePercentageChange(
+            cryptoData.ticker.rate,
+            cryptoData.ticker.previousRate
+          ) < 0
+        }">
+          {{
+            calculatePercentageChange(
+              cryptoData.ticker.rate,
+              cryptoData.ticker.previousRate
+            ).toFixed(2)
+          }}%
+        </td>
       </tr>
     </tbody>
   </table>
