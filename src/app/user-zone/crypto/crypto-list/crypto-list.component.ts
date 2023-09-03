@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { CryptoService } from '../../crypto.service';
-import { Observable } from 'rxjs';
-import { Ticker } from '../../interface/cryptoData.interface';
+import { CryptoService } from '../crypto.service';
+import { Observable, forkJoin } from 'rxjs';
+import { Ticker } from '../interface/cryptoData.interface';
 
 @Component({
-  selector: 'app-bitcoin',
-  templateUrl: './bitcoin.component.html',
-  styleUrls: ['./bitcoin.component.scss']
+  selector: 'app-crypto-list',
+  templateUrl: './crypto-list.component.html',
+  styleUrls: ['./crypto-list.component.scss']
 })
-export class BitcoinComponent implements OnInit {
-  cryptoData$!: Observable<Ticker>;
+export class CryptoListComponent implements OnInit {
+  btcData$!: Observable<Ticker>;
+  ethData$!: Observable<Ticker>;
 
   constructor(private cryptoService: CryptoService) {}
 
@@ -18,7 +19,9 @@ export class BitcoinComponent implements OnInit {
   }
 
   fetchMarketData(): void {
-    this.cryptoData$ = this.cryptoService.getMarketData('BTC-USD');
+    // Fetch data for BTC-USD and ETH-USD separately
+    this.btcData$ = this.cryptoService.getMarketData('BTC-USD');
+    this.ethData$ = this.cryptoService.getMarketData('ETH-USD');
   }
 
   calculatePercentageChange(rate: string, previousRate: string): number {

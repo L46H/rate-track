@@ -1,0 +1,97 @@
+<h1 class="text-center mb-5">Crypto Market Data</h1>
+<table class="table table-striped container">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Average Rate</th>
+      <th>24h Trend</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="btcData$ | async as btcData">
+    <tr>
+      <td>{{ btcData.ticker.market.code }}</td>
+      <td>
+        {{
+          calculateAverageRate(
+            btcData.ticker.rate,
+            btcData.ticker.previousRate
+          ).toFixed(2)
+        }}
+      </td>
+      <td
+        [ngClass]="{
+          'text-success':
+            calculatePercentageChange(
+              btcData.ticker.rate,
+              btcData.ticker.previousRate
+            ) >= 0,
+          'text-danger':
+            calculatePercentageChange(
+              btcData.ticker.rate,
+              btcData.ticker.previousRate
+            ) < 0
+        }"
+      >
+        {{
+          calculatePercentageChange(
+            btcData.ticker.rate,
+            btcData.ticker.previousRate
+          ) >= 0
+            ? '+' +
+              calculatePercentageChange(
+                btcData.ticker.rate,
+                btcData.ticker.previousRate
+              ).toFixed(2)
+            : calculatePercentageChange(
+                btcData.ticker.rate,
+                btcData.ticker.previousRate
+              ).toFixed(2)
+        }}%
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="ethData$ | async as ethData">
+    <tr>
+      <td>{{ ethData.ticker.market.code }}</td>
+      <td>
+        {{
+          calculateAverageRate(
+            ethData.ticker.rate,
+            ethData.ticker.previousRate
+          ).toFixed(2)
+        }}
+      </td>
+      <td
+        [ngClass]="{
+          'text-success':
+            calculatePercentageChange(
+              ethData.ticker.rate,
+              ethData.ticker.previousRate
+            ) >= 0,
+          'text-danger':
+            calculatePercentageChange(
+              ethData.ticker.rate,
+              ethData.ticker.previousRate
+            ) < 0
+        }"
+      >
+        {{
+          calculatePercentageChange(
+            ethData.ticker.rate,
+            ethData.ticker.previousRate
+          ) >= 0
+            ? '+' +
+              calculatePercentageChange(
+                ethData.ticker.rate,
+                ethData.ticker.previousRate
+              ).toFixed(2)
+            : calculatePercentageChange(
+                ethData.ticker.rate,
+                ethData.ticker.previousRate
+              ).toFixed(2)
+        }}%
+      </td>
+    </tr>
+  </tbody>
+</table>
