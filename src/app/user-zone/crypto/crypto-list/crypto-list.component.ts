@@ -11,6 +11,9 @@ import { Ticker } from '../interface/cryptoData.interface';
 export class CryptoListComponent implements OnInit {
   btcData$!: Observable<Ticker>;
   ethData$!: Observable<Ticker>;
+  usdtData$!: Observable<Ticker>;
+  ltcData$!: Observable<Ticker>;
+  xrpData$!: Observable<Ticker>;
 
   constructor(private cryptoService: CryptoService) {}
 
@@ -19,9 +22,11 @@ export class CryptoListComponent implements OnInit {
   }
 
   fetchMarketData(): void {
-    // Fetch data for BTC-USD and ETH-USD separately
     this.btcData$ = this.cryptoService.getMarketData('BTC-USD');
     this.ethData$ = this.cryptoService.getMarketData('ETH-USD');
+    this.ltcData$ = this.cryptoService.getMarketData('LTC-USD');
+    this.usdtData$ = this.cryptoService.getMarketData('USDT-USD');
+    this.xrpData$ = this.cryptoService.getMarketData('XRP-USD');
   }
 
   calculatePercentageChange(rate: string, previousRate: string): number {

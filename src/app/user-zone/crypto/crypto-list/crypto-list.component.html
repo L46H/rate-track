@@ -1,5 +1,5 @@
-<h1 class="text-center mb-5">Crypto Market Data</h1>
-<table class="table table-striped container">
+<h1 class="text-center mb-5">Market Overview</h1>
+<table class="table container table table-bordered is-striped table-hover">
   <thead>
     <tr>
       <th>Name</th>
@@ -15,7 +15,7 @@
           calculateAverageRate(
             btcData.ticker.rate,
             btcData.ticker.previousRate
-          ).toFixed(2)
+          ).toFixed(2) | currency: 'USD'
         }}
       </td>
       <td
@@ -59,7 +59,7 @@
           calculateAverageRate(
             ethData.ticker.rate,
             ethData.ticker.previousRate
-          ).toFixed(2)
+          ).toFixed(2) | currency: 'USD'
         }}
       </td>
       <td
@@ -89,6 +89,138 @@
             : calculatePercentageChange(
                 ethData.ticker.rate,
                 ethData.ticker.previousRate
+              ).toFixed(2)
+        }}%
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="ltcData$ | async as ltcData">
+    <tr>
+      <td>{{ ltcData.ticker.market.code }}</td>
+      <td>
+        {{
+          calculateAverageRate(
+            ltcData.ticker.rate,
+            ltcData.ticker.previousRate
+          ).toFixed(2) | currency: 'USD'
+        }}
+      </td>
+      <td
+        [ngClass]="{
+          'text-success':
+            calculatePercentageChange(
+              ltcData.ticker.rate,
+              ltcData.ticker.previousRate
+            ) >= 0,
+          'text-danger':
+            calculatePercentageChange(
+              ltcData.ticker.rate,
+              ltcData.ticker.previousRate
+            ) < 0
+        }"
+      >
+        {{
+          calculatePercentageChange(
+            ltcData.ticker.rate,
+            ltcData.ticker.previousRate
+          ) >= 0
+            ? '+' +
+              calculatePercentageChange(
+                ltcData.ticker.rate,
+                ltcData.ticker.previousRate
+              ).toFixed(2)
+            : calculatePercentageChange(
+                ltcData.ticker.rate,
+                ltcData.ticker.previousRate
+              ).toFixed(2)
+        }}%
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="usdtData$ | async as usdtData">
+    <tr>
+      <td>{{ usdtData.ticker.market.code }}</td>
+      <td>
+        {{
+          calculateAverageRate(
+            usdtData.ticker.rate,
+            usdtData.ticker.previousRate
+          ).toFixed(2) | currency: 'USD'
+        }}
+      </td>
+      <td
+        [ngClass]="{
+          'text-success':
+            calculatePercentageChange(
+              usdtData.ticker.rate,
+              usdtData.ticker.previousRate
+            ) >= 0,
+          'text-danger':
+            calculatePercentageChange(
+              usdtData.ticker.rate,
+              usdtData.ticker.previousRate
+            ) < 0
+        }"
+      >
+        {{
+          calculatePercentageChange(
+            usdtData.ticker.rate,
+            usdtData.ticker.previousRate
+          ) >= 0
+            ? '+' +
+              calculatePercentageChange(
+                usdtData.ticker.rate,
+                usdtData.ticker.previousRate
+              ).toFixed(2)
+            : calculatePercentageChange(
+                usdtData.ticker.rate,
+                usdtData.ticker.previousRate
+              ).toFixed(2)
+        }}%
+      </td>
+    </tr>
+  </tbody>
+
+  <tbody *ngIf="xrpData$ | async as xrpData">
+    <tr>
+      <td>{{ xrpData.ticker.market.code }}</td>
+      <td>
+        {{
+          calculateAverageRate(
+            xrpData.ticker.rate,
+            xrpData.ticker.previousRate
+          ).toFixed(2) | currency: 'USD'
+        }}
+      </td>
+      <td
+        [ngClass]="{
+          'text-success':
+            calculatePercentageChange(
+              xrpData.ticker.rate,
+              xrpData.ticker.previousRate
+            ) >= 0,
+          'text-danger':
+            calculatePercentageChange(
+              xrpData.ticker.rate,
+              xrpData.ticker.previousRate
+            ) < 0
+        }"
+      >
+        {{
+          calculatePercentageChange(
+            xrpData.ticker.rate,
+            xrpData.ticker.previousRate
+          ) >= 0
+            ? '+' +
+              calculatePercentageChange(
+                xrpData.ticker.rate,
+                xrpData.ticker.previousRate
+              ).toFixed(2)
+            : calculatePercentageChange(
+                xrpData.ticker.rate,
+                xrpData.ticker.previousRate
               ).toFixed(2)
         }}%
       </td>
