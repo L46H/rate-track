@@ -6,7 +6,8 @@ import { Ticker } from '../interface/cryptoData.interface';
 @Component({
   selector: 'app-crypto-list',
   templateUrl: './crypto-list.component.html',
-  styleUrls: ['./crypto-list.component.scss']
+  styleUrls: ['./crypto-list.component.scss'],
+  providers: [CryptoService]
 })
 export class CryptoListComponent implements OnInit {
   btcData$!: Observable<Ticker>;
