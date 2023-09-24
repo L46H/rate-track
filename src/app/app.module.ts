@@ -6,10 +6,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthModule } from './auth/auth.module';
 import { WrongPathComponent } from './wrong-path/wrong-path.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent, WrongPathComponent],
-  imports: [BrowserModule, HttpClientModule, AppRoutingModule, AuthModule],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    AppRoutingModule,
+    AuthModule,
+    BrowserAnimationsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

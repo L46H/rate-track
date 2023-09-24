@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Ticker } from './interface/cryptoData.interface';
-import { Observable, interval, startWith, switchMap } from 'rxjs';
+import { Observable, delay, interval, startWith, switchMap } from 'rxjs';
 
 @Injectable()
 export class CryptoService {
@@ -13,6 +13,7 @@ export class CryptoService {
   getMarketData(currencyPair: string): Observable<Ticker> {
     return interval(this.updateInterval).pipe(
       startWith(0),
+      delay(1500),
       switchMap(() => this.http.get<Ticker>(`${this.apiUrl}/${currencyPair}`))
     );
   }
