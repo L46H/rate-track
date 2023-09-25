@@ -1,58 +1,64 @@
 <h1 class="text-center mb-5 fs-2 mt-2">Market Overview</h1>
 
 <div class="container d-flex justify-content-center align-items-center pt-5">
-  <mat-spinner *ngIf="!(cryptoData$['BTC-USD'] | async)"></mat-spinner>
+  <mat-spinner *ngIf="!(cryptoData$['BTC-USD'] | async) && !error"></mat-spinner>
 </div>
 
-<table class="table container table table-bordered is-striped table-hover">
-  <thead *ngIf="cryptoData$['BTC-USD'] | async as btcData">
-    <tr>
-      <th>Name</th>
-      <th>Average Rate</th>
-      <th>24h Trend</th>
-    </tr>
-  </thead>
-  <tbody *ngFor="let symbol of cryptoSymbols; else: loading; let i = index">
-    <tr *ngIf="cryptoData$[symbol] | async as data">
-      <td>{{ data.ticker.market.code }}</td>
-      <td>
-        {{
-          calculateAverageRate(
-            data.ticker.rate,
-            data.ticker.previousRate
-          ).toFixed(2) | currency : 'USD'
-        }}
-      </td>
-      <td
-        [ngClass]="{
-          'text-success':
-            calculatePercentageChange(
+<ng-container *ngIf="error as errorMessage; else cryptoList">
+  <div class="container text-center alert alert-danger mt-5">{{ errorMessage }}</div>
+</ng-container>
+
+<ng-template #cryptoList>
+  <table class="table container table table-bordered is-striped table-hover">
+    <thead *ngIf="cryptoData$['BTC-USD'] | async as btcData">
+      <tr>
+        <th>Name</th>
+        <th>Average Rate</th>
+        <th>24h Trend</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let symbol of cryptoSymbols; else loading; let i = index">
+      <tr *ngIf="cryptoData$[symbol] | async as data">
+        <td>{{ data.ticker.market.code }}</td>
+        <td>
+          {{
+            calculateAverageRate(
               data.ticker.rate,
               data.ticker.previousRate
-            ) >= 0,
-          'text-danger':
-            calculatePercentageChange(
-              data.ticker.rate,
-              data.ticker.previousRate
-            ) < 0
-        }"
-      >
-        {{
-          calculatePercentageChange(
-            data.ticker.rate,
-            data.ticker.previousRate
-          ) >= 0
-            ? '+' +
+            ).toFixed(2) | currency : 'USD'
+          }}
+        </td>
+        <td
+          [ngClass]="{
+            'text-success':
               calculatePercentageChange(
                 data.ticker.rate,
                 data.ticker.previousRate
-              ).toFixed(2)
-            : calculatePercentageChange(
+              ) >= 0,
+            'text-danger':
+              calculatePercentageChange(
                 data.ticker.rate,
                 data.ticker.previousRate
-              ).toFixed(2)
-        }}%
-      </td>
-    </tr>
-  </tbody>
-</table>
+              ) < 0
+          }"
+        >
+          {{
+            calculatePercentageChange(
+              data.ticker.rate,
+              data.ticker.previousRate
+            ) >= 0
+              ? '+' +
+                calculatePercentageChange(
+                  data.ticker.rate,
+                  data.ticker.previousRate
+                ).toFixed(2)
+              : calculatePercentageChange(
+                  data.ticker.rate,
+                  data.ticker.previousRate
+                ).toFixed(2)
+          }}%
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</ng-template>

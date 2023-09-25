@@ -1,7 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Ticker } from './interface/cryptoData.interface';
-import { Observable, delay, interval, startWith, switchMap } from 'rxjs';
+import {
+  Observable,
+  catchError,
+  delay,
+  interval,
+  startWith,
+  switchMap,
+  throwError
+} from 'rxjs';
 
 @Injectable()
 export class CryptoService {
@@ -14,7 +22,16 @@ export class CryptoService {
     return interval(this.updateInterval).pipe(
       startWith(0),
       delay(1500),
-      switchMap(() => this.http.get<Ticker>(`${this.apiUrl}/${currencyPair}`))
+      switchMap(() => this.http.get<Ticker>(`${this.apiUrl}/${currencyPair}`)),
+      catchError(this.handleError)
     );
+  }
+
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    const errorMessage =
+      error.status === 404
+        ? '404 status: error occurred while fetching data from server'
+        : 'unknown error occurred no data available';
+    return throwError(() => new Error(errorMessage));
   }
 }

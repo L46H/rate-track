@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CryptoService } from '../crypto.service';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Ticker } from '../interface/cryptoData.interface';
 
 @Component({
@@ -18,6 +18,7 @@ export class CryptoListComponent implements OnInit {
     'XRP-USD'
   ];
   cryptoData$: { [symbol: string]: Observable<Ticker> } = {};
+  error: Error | null = null;
 
   constructor(private cryptoService: CryptoService) {}
 
@@ -27,7 +28,13 @@ export class CryptoListComponent implements OnInit {
 
   fetchMarketData(): void {
     this.cryptoSymbols.forEach(symbol => {
-      this.cryptoData$[symbol] = this.cryptoService.getMarketData(symbol);
+      this.cryptoData$[symbol] = this.cryptoService.getMarketData(symbol).pipe(
+        tap({
+          error: error => {
+            this.error = error.message;
+          }
+        })
+      );
     });
   }
 
